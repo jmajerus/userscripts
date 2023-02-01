@@ -1,0 +1,131 @@
+<body>
+
+<form class="ubntForm ng-valid-divergent is-validation-hidden ng-valid-ip-in-subnet ng-dirty ng-valid-parse ng-valid ng-valid-required" novalidate="" autocomplete="off" name="clientPropertiesConfigureNetworkCtrl.form" ng-class="{    'is-form-validation-visible': clientPropertiesConfigureNetworkCtrl.showValidation,    'is-validation-hidden': !clientPropertiesConfigureNetworkCtrl.showValidation  }" ng-submit="clientPropertiesConfigureNetworkCtrl.form.$valid &amp;&amp; clientPropertiesConfigureNetworkCtrl.save()">
+  <unifi-config-changed unifi-config-changed-on-reset="clientPropertiesConfigureNetworkCtrl.resolveDivergence()" unifi-config-changed-on-ignore="clientPropertiesConfigureNetworkCtrl.ignoreDivergence()" unifi-config-changed-is-cozy="true" unifi-config-changed-with-whiteout="true" ng-show="isOpen &amp;&amp; clientPropertiesConfigureNetworkCtrl.form.$error.divergent" class="ng-hide">
+    <div class="unifiConfigChanged unifiConfigChanged--whiteout" ng-class="{'unifiConfigChanged--whiteout': withWhiteout}">
+      <div class="appInfoBox appInfoBox--danger appInfoBox--responsive fullWidth appInfoBox--cozy appInfoBox--noBorder" ng-class="{      'appInfoBox--cozy': isCozy,      'appInfoBox--noBorder': withWhiteout    }">
+        <!---->
+        <div class="appInfoBox__content">
+          <div class="appInfoBox__body noMarginTop">
+            <p translate="COMMON_CONFIG_CHANGED_NOTICE">The configuration has changed. Do you want to reset the form and lose all your changes or ignore the changes and continue?</p>
+          </div>
+          <div class="ubntFooter mt-3"><button class="ubntButton ubntButton--secondary ignoreDivergence" type="button" ng-hide="hideIgnore" ng-click="onIgnore()" translate="COMMON_CONFIG_CHANGED_ACTIONS_IGNORE">Ignore changes</button><button class="ubntButton ubntButton--primary resolveDivergence" type="button" ng-click="onReset()" translate="COMMON_CONFIG_CHANGED_ACTIONS_RESET">Reset form</button></div>
+        </div>
+      </div>
+    </div>
+  </unifi-config-changed>
+  <!---->
+  <fieldset class="appFieldset appFieldset--quiet" ng-if="!clientPropertiesConfigureNetworkCtrl.isBatchEdit" ng-disabled="isReadOnly">
+    <div class="container container--vertical-cozy container--horizontal-cozy container--flush">
+      <div class="row">
+        <div class="col-9 flex-centered-vertically"><label class="ubntLabel ubntLabel--primary" for="clientFixedIp3506" translate="CLIENT_PROPERTIES_VALUES_USE_FIXED_IP">Use fixed IP address</label>
+          <unifi-notify-device-requirement class="ml-2" unifi-notify-device-requirement-type="ugw" unifi-notify-device-requirement-no-move="true">
+            <!---->
+          </unifi-notify-device-requirement>
+        </div>
+        <div class="col-3 type-right">
+          <div class="ubntToggle" data-on="On" data-off="Off" unifi-toggle-name="'clientFixedIp'" unifi-toggle-id="::'clientFixedIp' + directiveId" unifi-toggle-model="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" unifi-toggle-model-master="clientPropertiesConfigureNetworkCtrl.model.attributes.use_fixedip" ng-disabled="!clientPropertiesConfigureNetworkCtrl.clientUtils.canAssignFixedIp()">
+            <!---->
+            <!----><input ng-if="::toggleCtrl.modelMaster === undefined" type="checkbox" name="clientFixedIp" id="clientFixedIp3506" ng-disabled="toggleCtrl.ngDisabled" ng-model="toggleCtrl.model" class="ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse">
+            <!----><label for="clientFixedIp3506"></label></div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <!---->
+  <!---->
+  <fieldset class="appFieldset appFieldset--quiet" ng-show="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" ng-disabled="isReadOnly">
+    <div class="container container--vertical-comfy container--horizontal-cozy container--flush mt-2">
+      <div class="row">
+        <div class="col ubntFormGroup"><label class="ubntLabel" translate="CLIENT_PROPERTIES_LABEL_NETWORK">Network</label><select class="width-full ng-valid-divergent ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" name="clientNetwork" ng-model="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.network_id" ng-model-master="clientPropertiesConfigureNetworkCtrl.model.attributes.network_id" ng-options="network.id as network.get('name') for network in clientPropertiesConfigureNetworkCtrl.getNetworks()" ng-required="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" required="required">
+            <!---->
+            <option label="Default" value="string:6313c8a596a22d07d3f99a67">Default</option>
+          </select></div>
+      </div>
+      <!---->
+      <div class="row" ng-if="!clientPropertiesConfigureNetworkCtrl.isBatchEdit">
+        <div class="col ubntFormGroup"><label class="ubntLabel" translate="CLIENT_PROPERTIES_LABEL_IP_ADDRESS">IP Address</label><input class="width-full ng-pristine ng-untouched ng-valid ng-valid-divergent ng-not-empty ng-valid-ip-in-subnet ng-valid-required" type="text" name="clientIpAddress" ng-model="clientPropertiesConfigureNetworkCtrl.ipAddress" ng-model-master="clientPropertiesConfigureNetworkCtrl.ipAddressMaster" unifi-validate-ip-in-subnet="clientPropertiesConfigureNetworkCtrl.getNetworkIpSubnet()" ng-required="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" spellcheck="false" data-ms-editor="true" required="required">
+          <div class="appInputFeedback appInputFeedback--danger ng-hide" ng-show="clientPropertiesConfigureNetworkCtrl.form.clientIpAddress.$error.ipInSubnet" translate="VALIDATION_HINT_IP_IN_SUBNET" translate-values="{ip: clientPropertiesConfigureNetworkCtrl.form.clientIpAddress.$viewValue, subnet: clientPropertiesConfigureNetworkCtrl.getNetworkIpSubnet()}">192.168.1.161 is not in the allowed subnet of 192.168.1.1/24.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <!---->
+  </fieldset>
+  <!---->
+  <div class="ubntFooter mt-6" ng-if="!isReadOnly">
+    <div class="ubntFooter__buttons">
+      <div class="ubntButtonGroup ubntButtonGroup--cozy"><button class="ubntButton ubntButton--secondary resetForm" type="button" ng-click="clientPropertiesConfigureNetworkCtrl.reset()" ng-disabled="clientPropertiesConfigureNetworkCtrl.form.$pristine" translate="COMMON_ACTIONS_CANCEL">Cancel</button><button class="ubntButton ubntButton--primary saveClient busyToggle" ng-click="clientPropertiesConfigureNetworkCtrl.showValidation = true" busy-toggle="clientPropertiesConfigureNetworkCtrl.isSubmitting" busy-toggle-spinner-classes="['appSpinner appSpinner--dark appSpinner--centered appSpinner--small']" ng-disabled="clientPropertiesConfigureNetworkCtrl.isSaveDisabled()">
+          <div class="busyToggle__body" ng-hide="busySpinnerActive">Save</div>
+          <!---->
+        </button></div>
+    </div>
+  </div>
+  <!---->
+</form>
+
+<form class="ubntForm ng-valid-divergent is-validation-hidden ng-valid-ip-in-subnet ng-dirty ng-valid-parse ng-valid ng-valid-required" novalidate="" autocomplete="off" name="clientPropertiesConfigureNetworkCtrl.form" ng-class="{    'is-form-validation-visible': clientPropertiesConfigureNetworkCtrl.showValidation,    'is-validation-hidden': !clientPropertiesConfigureNetworkCtrl.showValidation  }" ng-submit="clientPropertiesConfigureNetworkCtrl.form.$valid &amp;&amp; clientPropertiesConfigureNetworkCtrl.save()">
+  <unifi-config-changed unifi-config-changed-on-reset="clientPropertiesConfigureNetworkCtrl.resolveDivergence()" unifi-config-changed-on-ignore="clientPropertiesConfigureNetworkCtrl.ignoreDivergence()" unifi-config-changed-is-cozy="true" unifi-config-changed-with-whiteout="true" ng-show="isOpen &amp;&amp; clientPropertiesConfigureNetworkCtrl.form.$error.divergent" class="ng-hide">
+    <div class="unifiConfigChanged unifiConfigChanged--whiteout" ng-class="{'unifiConfigChanged--whiteout': withWhiteout}">
+      <div class="appInfoBox appInfoBox--danger appInfoBox--responsive fullWidth appInfoBox--cozy appInfoBox--noBorder" ng-class="{      'appInfoBox--cozy': isCozy,      'appInfoBox--noBorder': withWhiteout    }">
+        <!---->
+        <div class="appInfoBox__content">
+          <div class="appInfoBox__body noMarginTop">
+            <p translate="COMMON_CONFIG_CHANGED_NOTICE">The configuration has changed. Do you want to reset the form and lose all your changes or ignore the changes and continue?</p>
+          </div>
+          <div class="ubntFooter mt-3"><button class="ubntButton ubntButton--secondary ignoreDivergence" type="button" ng-hide="hideIgnore" ng-click="onIgnore()" translate="COMMON_CONFIG_CHANGED_ACTIONS_IGNORE">Ignore changes</button><button class="ubntButton ubntButton--primary resolveDivergence" type="button" ng-click="onReset()" translate="COMMON_CONFIG_CHANGED_ACTIONS_RESET">Reset form</button></div>
+        </div>
+      </div>
+    </div>
+  </unifi-config-changed>
+  <!---->
+  <fieldset class="appFieldset appFieldset--quiet" ng-if="!clientPropertiesConfigureNetworkCtrl.isBatchEdit" ng-disabled="isReadOnly">
+    <div class="container container--vertical-cozy container--horizontal-cozy container--flush">
+      <div class="row">
+        <div class="col-9 flex-centered-vertically"><label class="ubntLabel ubntLabel--primary" for="clientFixedIp3506" translate="CLIENT_PROPERTIES_VALUES_USE_FIXED_IP">Use fixed IP address</label>
+          <unifi-notify-device-requirement class="ml-2" unifi-notify-device-requirement-type="ugw" unifi-notify-device-requirement-no-move="true">
+            <!---->
+          </unifi-notify-device-requirement>
+        </div>
+        <div class="col-3 type-right">
+          <div class="ubntToggle" data-on="On" data-off="Off" unifi-toggle-name="'clientFixedIp'" unifi-toggle-id="::'clientFixedIp' + directiveId" unifi-toggle-model="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" unifi-toggle-model-master="clientPropertiesConfigureNetworkCtrl.model.attributes.use_fixedip" ng-disabled="!clientPropertiesConfigureNetworkCtrl.clientUtils.canAssignFixedIp()">
+            <!---->
+            <!----><input ng-if="::toggleCtrl.modelMaster === undefined" type="checkbox" name="clientFixedIp" id="clientFixedIp3507" ng-disabled="toggleCtrl.ngDisabled" ng-model="toggleCtrl.model" class="ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse">
+            <!----><label for="clientFixedIp3506"></label></div>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <!---->
+  <!---->
+  <fieldset class="appFieldset appFieldset--quiet" ng-show="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" ng-disabled="isReadOnly">
+    <div class="container container--vertical-comfy container--horizontal-cozy container--flush mt-2">
+      <div class="row">
+        <div class="col ubntFormGroup"><label class="ubntLabel" translate="CLIENT_PROPERTIES_LABEL_NETWORK">Network</label><select class="width-full ng-valid-divergent ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched" name="clientNetwork" ng-model="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.network_id" ng-model-master="clientPropertiesConfigureNetworkCtrl.model.attributes.network_id" ng-options="network.id as network.get('name') for network in clientPropertiesConfigureNetworkCtrl.getNetworks()" ng-required="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" required="required">
+            <!---->
+            <option label="Default" value="string:6313c8a596a22d07d3f99a67">Default</option>
+          </select></div>
+      </div>
+      <!---->
+      <div class="row" ng-if="!clientPropertiesConfigureNetworkCtrl.isBatchEdit">
+        <div class="col ubntFormGroup"><label class="ubntLabel" translate="CLIENT_PROPERTIES_LABEL_IP_ADDRESS">IP Address</label><input class="width-full ng-pristine ng-untouched ng-valid ng-valid-divergent ng-not-empty ng-valid-ip-in-subnet ng-valid-required" type="text" name="clientIpAddress" ng-model="clientPropertiesConfigureNetworkCtrl.ipAddress" ng-model-master="clientPropertiesConfigureNetworkCtrl.ipAddressMaster" unifi-validate-ip-in-subnet="clientPropertiesConfigureNetworkCtrl.getNetworkIpSubnet()" ng-required="clientPropertiesConfigureNetworkCtrl.modelCopy.attributes.use_fixedip" spellcheck="false" data-ms-editor="true" required="required">
+          <div class="appInputFeedback appInputFeedback--danger ng-hide" ng-show="clientPropertiesConfigureNetworkCtrl.form.clientIpAddress.$error.ipInSubnet" translate="VALIDATION_HINT_IP_IN_SUBNET" translate-values="{ip: clientPropertiesConfigureNetworkCtrl.form.clientIpAddress.$viewValue, subnet: clientPropertiesConfigureNetworkCtrl.getNetworkIpSubnet()}">192.168.1.161 is not in the allowed subnet of 192.168.1.1/24.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+    <!---->
+  </fieldset>
+  <!---->
+  <div class="ubntFooter mt-6" ng-if="!isReadOnly">
+    <div class="ubntFooter__buttons">
+      <div class="ubntButtonGroup ubntButtonGroup--cozy"><button class="ubntButton ubntButton--secondary resetForm" type="button" ng-click="clientPropertiesConfigureNetworkCtrl.reset()" ng-disabled="clientPropertiesConfigureNetworkCtrl.form.$pristine" translate="COMMON_ACTIONS_CANCEL">Cancel</button><button class="ubntButton ubntButton--primary saveClient busyToggle" ng-click="clientPropertiesConfigureNetworkCtrl.showValidation = true" busy-toggle="clientPropertiesConfigureNetworkCtrl.isSubmitting" busy-toggle-spinner-classes="['appSpinner appSpinner--dark appSpinner--centered appSpinner--small']" ng-disabled="clientPropertiesConfigureNetworkCtrl.isSaveDisabled()">
+          <div class="busyToggle__body" ng-hide="busySpinnerActive">Save</div>
+          <!---->
+        </button></div>
+    </div>
+  </div>
+  <!---->
+</form>
+
+</body>
